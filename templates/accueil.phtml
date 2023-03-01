@@ -1,0 +1,17 @@
+<section>
+    <h2>Les derniers articles</h2>
+    <?php foreach ($articles as $article) : ?>
+        <article>
+            <h3><?= $article->getTitle(); ?></h3>
+            <div><?= $article->getCategoryName(); ?></div>
+            <small>Créé le <?= $article->getFormattedCreatedAt(); ?></small>
+
+
+            <?php if ($article->getImage()) : ?>
+                <img src="<?= asset('images/' . $article->getImage()) ?>" alt="">
+            <?php endif; ?>
+            <p><?= mb_substr($article->getContent(), 0, 100) ?> [...]</p>
+            <a href="<?= constructUrl('/article', ['id' => $article->getId()]); ?>">Lire la suite</a>
+        </article>
+    <?php endforeach; ?>
+</section>

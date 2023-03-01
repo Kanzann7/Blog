@@ -1,0 +1,52 @@
+<article>
+
+    <h3><?= $articleId->getTitle(); ?></h3>
+    <h4><?= $articleId->getCategoryName(); ?></h4>
+    <small>Créé le <?= $articleId->getFormattedCreatedAt(); ?></small>
+
+
+    <?php if ($articleId->getImage()) : ?>
+        <img src="<?= asset('images/' . $articleId->getImage()) ?>" alt="">
+
+    <?php endif; ?>
+
+
+
+    <p><?= $articleId->getContent(); ?></p>
+
+
+    <form action="<?= constructUrl('/article', ['id' => $idArticle]) ?>" method="POST">
+        <div>
+            <label for="nickname">Votre prénom</label>
+            <input type="text" name="nickname" value="" id="nickname">
+            <?php if (isset($errors['nickname'])) : ?>
+                <p><?= $errors['nickname']; ?></p>
+            <?php endif; ?>
+
+        </div> <br> <br> <br>
+        <div>
+            <label for="comment">Votre commentaire</label>
+            <textarea name="comment" value="" id="comment"> </textarea>
+            <?php if (isset($errors['comment'])) : ?>
+                <p><?= $errors['comment']; ?></p>
+            <?php endif; ?>
+        </div>
+        <input type="submit" name="submit" value="Envoyer">
+
+
+
+
+
+    </form>
+
+    <?php if (empty($comments)) : ?>
+        <p>Soyez le premier à ajouter un commentaire !</p>
+    <?php else : ?>
+        <?php foreach ($comments as $comment) : ?>
+            <div>
+                <h3>Ajouté par <?= $comment->getNickname(); ?> le <?= $comment->getFormattedCreatedAt() ?></h3>
+                <p><?= $comment->getContent(); ?></p>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</article>
